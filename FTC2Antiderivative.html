@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>FTC, Part 2 - Function and its Antiderivative</title>
+    <script src="https://sagecell.sagemath.org/static/jquery.min.js"></script>
+    <script src="https://sagecell.sagemath.org/embedded_sagecell.js"></script>
+    <script>
+$(function () {
+    // Make *any* div with class 'compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.compute',
+    						template:       sagecell.templates.minimal,
+                           evalButtonText: 'Launch the Interactive Applet Now'});
+});
+    </script>
+  </head>
+  <body style="width: 1000px;">
+
+  <h1>FTC, Part 2 - Function and its Antiderivative</h1>
+
+<p>An Interactive Applet powered by Sage and MathJax.</p>
+<p>(By Kelsey Norman with HTML code from Prof. Gregory V. Bard)</p>
+
+<hr>
+
+<div class="compute">
+<script type="text/x-sage">
+
+@interact
+def integralTogether(f = input_box( default = sin(x)/x, label = "function"), 
+        x_min = input_box( default = 0, label = "x min"), 
+        x_max = input_box( default = 8, label = "x max") ):
+    def F(x):
+        (y,e) = integral_numerical(f,x_min,x)
+        return y
+
+    show(plot( f, x_min, x_max, color="red") + plot( F, x_min, x_max, color="green") )
+
+</script>
+</div>
+
+<hr>
+Last modified on June 8th, 2017.
+</body>
+</html>
