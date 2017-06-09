@@ -27,25 +27,32 @@ $(function () {
 <div class="compute">
 <script type="text/x-sage">
 
-@interact
-def deltaH( f = input_box( default = sin(x)/x, label = "function" ),
-        x_min = input_box( default = 0, label = "x min"),
-        x_max = input_box( default = 8, label = "x max"),
-        x_0 = input_box( default = 2, label = "point to evaluate (x_0)" ),
-        h = input_box( default = 0.2, label = "rate of change") ):
-    p = plot(f, x_min, x_0 + h, fill=True, fillcolor = '#ccccff') + plot(f, x_0, x_0 + h, fill=True,
-        fillcolor = '#e60000') + plot(f, x_min, x_max)
+@interact( layout = [ ['func', 'x_0'], ['x_min', 'x_max'], ['h'] ])
+def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20 ),
+        x_min = input_box( default = 0, label = "x min", width = 5),
+        x_max = input_box( default = 8, label = "x max", width = 5),
+        x_0 = input_box( default = 2, label = "point to evaluate (x_0)", width = 5),
+        h = slider( -0.5, 0.5, default = 0.2, step_size = 0.01, label = "h") ):
+            
+    f = func.function(x)          
+    p = plot(f, x_min, x_0 + h, fill=True, fillcolor = '#ccccff') + plot(f, x_min, x_max)
+    
+    if h >= 0:
+        p += plot(f, x_0, x_0 + h, fill=True, fillcolor = '#e60000')
+    else: 
+        p += plot(f, x_0 + h, x_0, fill = True, fillcolor = '#ff9966')
         
     area = N(integrate(f, x, x_0, x_0 + h))
     average = area / h
-    print "The red area is " + str(area)
-    print "The average value of of f on the red area is " + str( average )
+    print "F(x_0 + h) - F(x_0) = colored area = " + str(area)
+    print "Average value of f on [x_0, x_0+h] = [F(x_0+h) - F(x_0)] / h  = " + str( average )
+    print "f(x_0) = " + str(f(x_0)) + " = " + str(n(f(x_0)))
     show(p)
 
 </script>
 </div>
 
 <hr>
-Last modified on June 8th, 2017.
+Last modified on June 9th, 2017.
 </body>
 </html>
