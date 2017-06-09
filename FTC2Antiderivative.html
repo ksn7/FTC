@@ -27,40 +27,62 @@ $(function () {
 <div class="compute">
 <script type="text/x-sage">
 
-@interact
-def integralTogether(func = input_box( default = sin(x)/x, label = "function"), 
-        x_min = input_box( default = 0, label = "x min"), 
-        x_max = input_box( default = 8, label = "x max") ):
+@interact( layout = [ ['func'], ['lower', 'upper'] ])
+def integralTogether(func = input_box( default = sin(x)/x, label = "function", width = 20), 
+        lower = slider( 0, 8, 0.1, default = 2, label = "a"),
+        upper = slider( 0, 8, 0.1, default = 6, label = "x") ):
    
     # Dodge the deprecation warning?        
     f = func.function(x)
      
     # Interior method to integrate the function        
     def F(x):
-        (y,e) = integral_numerical(f,x_min,x)
+        (y,e) = integral_numerical(f,0,x)
         return y
         
     # Set up graphs for the function and it's antiderivative    
-    f_graph = plot( f, x_min, x_max, color="purple") 
-    anti_graph = plot( F, x_min, x_max, color="green")
+    f_graph = plot( f, 0, 8, color="blue") 
+    anti_graph = plot( F, 0, 8, color="purple")
 
-    # Set parameters for following loop
-    x_start = x_min
-    x_end = x_start + 0.25
-    zeroes = []
+    if lower == upper:
+        print "Please choose different bounds"
+        
+    elif lower < upper:    
+        # Set parameters for following loop
+        x_start = lower
+        x_end = x_start + 0.25
+        zeroes = []
+        zeroes.append(lower)
 
-    # While loop to find all the roots of the function
-    while x_end <= x_max :
-        try:
-            zero = find_root(f, x_start, x_end)
-            zeroes.append( zero )
-            x_start = zero + 10^-12
-            x_end = x_start + 0.25
-        except:
-            x_end += 0.25
-            
-    # Include x_max and x_min in the list to ease making intervals       
-    zeroes.append(x_max)
+        # While loop to find all the roots of the function
+        while x_end <= upper :
+            try:
+                zero = find_root(f, x_start, x_end)
+                if (zero not in zeroes):
+                    zeroes.append( zero )
+                x_start = zero + 10^-12
+                x_end = x_start + 0.25
+            except:
+                x_end += 0.25
+        zeroes.append(upper)
+    else:
+        # Set parameters for following loop
+        x_start = upper
+        x_end = x_start + 0.25
+        zeroes = []
+        zeroes.append(upper)
+
+        # While loop to find all the roots of the function
+        while x_end <= lower :
+            try:
+                zero = find_root(f, x_start, x_end)
+                if (zero not in zeroes):
+                    zeroes.append( zero )
+                x_start = zero + 10^-12
+                x_end = x_start + 0.25
+            except:
+                x_end += 0.25     
+        zeroes.append(lower)
             
     for j in range( len( zeroes ) - 1 ):
         # Pick a point between two zeroes or between a zero and an endpoint
@@ -69,16 +91,17 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function"),
         # If the "mid"-point is positive, the interval is positive, color accordingly
         # Else color the opposite color
         if f(x_mid) > 0:
-            f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'purple', fill = True, 
-                fillcolor = '#ff9999' )
-            anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'red')
+            f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'blue', fill = True, 
+                fillcolor = 'green' )
+            anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'green', thickness = 3)
         else:
-            f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'purple', fill = True,
-                fillcolor = '#99ccff' )
-            anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'blue')
+            f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'blue', fill = True,
+                fillcolor = 'red' )
+            anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'red', thickness = 3)
                 
     graph = f_graph + anti_graph
-    graph.show()      
+    graph.show()
+    print "The value of the shaded area is " + str(integral_numerical(f,lower,upper)[0])
 
 </script>
 </div>
