@@ -28,19 +28,63 @@ $(function () {
 <script type="text/x-sage">
 
 @interact
-def integralTogether(f = input_box( default = sin(x)/x, label = "function"), 
+def integralTogether(func = input_box( default = sin(x)/x, label = "function"), 
         x_min = input_box( default = 0, label = "x min"), 
         x_max = input_box( default = 8, label = "x max") ):
+   
+    # Dodge the deprecation warning?        
+    f = func.function(x)
+     
+    # Interior method to integrate the function        
     def F(x):
         (y,e) = integral_numerical(f,x_min,x)
         return y
+        
+    # Set up graphs for the function and it's antiderivative    
+    f_graph = plot( f, x_min, x_max, color="purple") 
+    anti_graph = plot( F, x_min, x_max, color="green")
 
-    show(plot( f, x_min, x_max, color="red") + plot( F, x_min, x_max, color="green") )
+    # Set parameters for following loop
+    x_start = x_min
+    x_end = x_start + 0.25
+    zeroes = []
+
+    # While loop to find all the roots of the function
+    while x_end <= x_max :
+        try:
+            zero = find_root(f, x_start, x_end)
+            zeroes.append( zero )
+            x_start = zero + 10^-12
+            x_end = x_start + 0.25
+        except:
+            x_end += 0.25
+            
+    # Include x_max and x_min in the list to ease making intervals       
+    zeroes.append(x_max)
+            
+    for j in range( len( zeroes ) - 1 ):
+        # Pick a point between two zeroes or between a zero and an endpoint
+        x_mid = (zeroes[j] + zeroes[j+1]) / 2
+        
+        # If the "mid"-point is positive, the interval is positive, color accordingly
+        # Else color the opposite color
+        if f(x_mid) > 0:
+            f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'purple', fill = True, 
+                fillcolor = '#ff9999' )
+            anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'red')
+        else:
+            f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'purple', fill = True,
+                fillcolor = '#99ccff' )
+            anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'blue')
+                
+    graph = f_graph + anti_graph
+    graph.show()
+    print zeroes         
 
 </script>
 </div>
 
 <hr>
-Last modified on June 8th, 2017.
+Last modified on June 9th, 2017.
 </body>
 </html>
