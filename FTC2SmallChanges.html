@@ -31,7 +31,7 @@ $(function () {
 def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20 ),
         x_min = input_box( default = 0, label = "x min", width = 5),
         x_max = input_box( default = 8, label = "x max", width = 5),
-        x_0 = input_box( default = 2, label = "point to evaluate (x_0)", width = 5),
+        x_0 = input_box( default = 2, label = "point to evaluate (x0)", width = 5),
         h = slider( -0.5, 0.5, default = 0.2, step_size = 0.01, label = "h") ):
             
     f = func.function(x)          
@@ -44,9 +44,9 @@ def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20
         
     area = N(integrate(f, x, x_0, x_0 + h))
     average = area / h
-    print "F(x_0 + h) - F(x_0) = colored area = " + str(area)
-    print "Average value of f on [x_0, x_0+h] = [F(x_0+h) - F(x_0)] / h  = " + str( average )
-    print "f(x_0) = " + str(f(x_0)) + " = " + str(n(f(x_0)))
+    print "F(x0 + h) - F(x0) = colored area = " + str(area)
+    print "Average value of f on [x0, x0+h] = [F(x0+h) - F(x0)] / h  = " + str( average )
+    print "f(x0) = " + str(f(x0)) + " = " + str(n(f(x0)))
     show(p)
 
 </script>
