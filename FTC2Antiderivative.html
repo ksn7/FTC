@@ -37,12 +37,12 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
      
     # Interior method to integrate the function        
     def F(x):
-        (y,e) = integral_numerical(f,0,x)
+        (y,e) = integral_numerical(f,lower,x)
         return y
         
     # Set up graphs for the function and it's antiderivative    
     f_graph = plot( f, 0, 8, color="blue") 
-    anti_graph = plot( F, 0, 8, color="purple")
+    anti_graph = plot( F, lower, 8, color="purple")
 
     if lower == upper:
         print "Please choose different bounds"
@@ -107,6 +107,6 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
 </div>
 
 <hr>
-Last modified on June 9th, 2017.
+Last modified on June 12th, 2017.
 </body>
 </html>
