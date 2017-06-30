@@ -24,6 +24,23 @@ $(function () {
 
 <hr>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="jquery.jslatex.js"></script>
+
+<script>
+$(function () {
+    $(".latex").latex();
+});
+</script>
+
+<div class="latex">
+    \textrm{This demo shows the Fundamental Theorem of Calculus, Part 2. Here, we see that }
+    \\
+    lim_{h \rightarrow 0} \int_{x_0}^{x_0 + h} f(x) \, dx = lim_{h \rightarrow 0} \, [F(x_0 + h) - F(x_0)] = f(x_0)
+</div>
+
+<hr>
+
 <div class="compute">
 <script type="text/x-sage">
 
@@ -53,6 +70,6 @@ def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20
 </div>
 
 <hr>
-Last modified on June 12th, 2017.
+Last modified on June 29th, 2017.
 </body>
 </html>
