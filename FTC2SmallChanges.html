@@ -50,26 +50,27 @@ def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20
         x_max = input_box( default = 8, label = "x max", width = 5),
         x_0 = input_box( default = 2, label = "point to evaluate (x_0)", width = 5),
         h = slider( -0.2, 0.2, default = 0.05, step_size = 0.001, label = "h") ):
-            
+    
+    # Set up function and original plot        
     f = func.function(x)          
     p = plot(f, x_min, x_0 + h, fill=True, fillcolor = '#ccccff') + plot(f, x_min, x_max)
     
+    # Color h-region appropriately
     if h >= 0:
         p += plot(f, x_0, x_0 + h, fill=True, fillcolor = '#e60000')
     else: 
         p += plot(f, x_0 + h, x_0, fill = True, fillcolor = '#ff9966')
-        
+    
+    # Find and print average value    
     area = N(integrate(f, x, x_0, x_0 + h))
     average = area / h
-    print "F(x_0 + h) - F(x_0) = colored area = " + str(area)
-    print "Average value of f on [x_0, x_0+h] = [F(x_0+h) - F(x_0)] / h  = " + str( average )
-    print "f(x0) = " + str(f(x_0)) + " = " + str(n(f(x_0)))
+    pretty_print( "F(x_0 + h) - F(x_0) = colored area = " + str(area) + "\nAverage value of f on [x_0, x_0+h] = [F(x_0+h) - F(x_0)] / h  = " + str( average ) + "\nf(x0) = " + str(f(x_0)) + " = " + str(n(f(x_0))) )
     show(p)
 
 </script>
 </div>
 
 <hr>
-Last modified on June 30th, 2017.
+Last modified on July 24th, 2017.
 </body>
 </html>
