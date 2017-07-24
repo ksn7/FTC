@@ -61,9 +61,11 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
     f_graph = plot( f, 0, 8, color="blue") 
     anti_graph = plot( F, lower, 8, color="purple")
 
+    # If the bounds are the same, don't do anything
     if lower == upper:
         print "Please choose different bounds"
-        
+    
+    # Find zeroes for bounds inputted correctly    
     elif lower < upper:    
         # Set parameters for following loop
         x_start = lower
@@ -82,6 +84,8 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
             except:
                 x_end += 0.25
         zeroes.append(upper)
+        
+    # Find zeroes for bounds inputted incorrectly
     else:
         # Set parameters for following loop
         x_start = upper
@@ -100,7 +104,8 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
             except:
                 x_end += 0.25     
         zeroes.append(lower)
-            
+    
+    # Iterate through zeroes and color graph appropriately        
     for j in range( len( zeroes ) - 1 ):
         # Pick a point between two zeroes or between a zero and an endpoint
         x_mid = (zeroes[j] + zeroes[j+1]) / 2
@@ -115,15 +120,16 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
             f_graph += plot( f, zeroes[j], zeroes[j+1], color = 'blue', fill = True,
                 fillcolor = 'red' )
             anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'red', thickness = 3)
-                
+   
+    # Combing graphs, show, and print area          
     graph = f_graph + anti_graph
     graph.show()
-    print "The value of the shaded area is " + str(integral_numerical(f,lower,upper)[0])
+    pretty_print( "The value of the shaded area is " + str(integral_numerical(f,lower,upper)[0])
 
 </script>
 </div>
 
 <hr>
-Last modified on June 30th, 2017.
+Last modified on July 24th, 2017.
 </body>
 </html>
