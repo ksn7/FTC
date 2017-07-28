@@ -36,7 +36,7 @@ $(function () {
 <div class="latex">
     \textrm{This demo shows how the integral of a function affects the shape of its antiderivative. Here, we show }
     \\
-    \int_a^b f(x) \, dx = F(b) - F(a).
+    \int_a^b f(x) \, dx = F(b) - F(a), \textrm{ where } F \textrm{ is the antiderivative of } f \textrm{ satisfying } F(a) = 0.
 </div>
 
 <hr>
@@ -45,7 +45,7 @@ $(function () {
 <script type="text/x-sage">
 
 @interact( layout = [ ['func'], ['lower', 'upper'] ])
-def integralTogether(func = input_box( default = sin(x)/x, label = "function", width = 20), 
+def integralTogether(func = input_box( default = sin(x)/x, label = "f(x) = ", width = 20), 
         lower = slider( 0, 8, 0.1, default = 2, label = "a"),
         upper = slider( 0, 8, 0.1, default = 6, label = "b") ):
    
@@ -130,6 +130,6 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "function", w
 </div>
 
 <hr>
-Last modified on July 25th, 2017.
+Last modified on July 28th, 2017.
 </body>
 </html>
