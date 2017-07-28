@@ -36,7 +36,7 @@ $(function () {
 <div class="latex">
     \textrm{This demo shows the Fundamental Theorem of Calculus, Part 1. Here, we see that }
     \\
-    \lim_{h \rightarrow 0} \int_{x_0}^{x_0 + h} f(x) \, dx = \lim_{h \rightarrow 0} \, [F(x_0 + h) - F(x_0)] = f(x_0), \textrm{ where } F(x) = \int_a^x f(t) \, dt.
+    \lim_{h \rightarrow 0} \frac{1}{h} \int_{x_0}^{x_0 + h} f(x) \, dx = \lim_{h \rightarrow 0} \, \frac{[F(x_0 + h) - F(x_0)]}{h} = f(x_0), \textrm{ where } F(x) = \int_a^x f(t) \, dt.
 </div>
 
 <hr>
@@ -71,6 +71,6 @@ def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20
 </div>
 
 <hr>
-Last modified on July 25th, 2017.
+Last modified on July 28th, 2017.
 </body>
 </html>
