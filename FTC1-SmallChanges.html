@@ -36,7 +36,7 @@ $(function () {
 <div class="latex">
     \textrm{This demo shows the Fundamental Theorem of Calculus, Part 1. Here, we see that }
     \\
-    \lim_{h \rightarrow 0} \frac{1}{h} \int_{x_0}^{x_0 + h} f(x) \, dx = \lim_{h \rightarrow 0} \, \frac{[F(x_0 + h) - F(x_0)]}{h} = f(x_0), \textrm{ where } F(x) = \int_a^x f(t) \, dt.
+    \lim_{h \rightarrow 0} \frac{1}{h} \int_{x_0}^{x_0 + h} f(x) \, dx = \lim_{h \rightarrow 0} \, \frac{F(x_0 + h) - F(x_0)}{h} = f(x_0), \textrm{ where } F(x) = \int_a^x f(t) \, dt.
 </div>
 
 <hr>
@@ -45,11 +45,11 @@ $(function () {
 <script type="text/x-sage">
 
 @interact( layout = [ ['func', 'x_0'], ['x_min', 'x_max'], ['h'] ])
-def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20 ),
-        x_min = input_box( default = 0, label = "x min", width = 5),
-        x_max = input_box( default = 8, label = "x max", width = 5),
-        x_0 = input_box( default = 2, label = "point to evaluate (x_0)", width = 5),
-        h = slider( -0.2, 0.2, default = 0.05, step_size = 0.001, label = "h") ):
+def deltaH( func = input_box( default = sin(x)/x, label = "$f(x) = $", width = 20 ),
+        x_min = input_box( default = 0, label = "$x_{min}$", width = 5),
+        x_max = input_box( default = 8, label = "$x_{max}$", width = 5),
+        x_0 = input_box( default = 2, label = "$x_0$", width = 5),
+        h = slider( -0.2, 0.2, default = 0.05, step_size = 0.001, label = "$h$") ):
     
     # Set up function and original plot        
     f = func.function(x)          
@@ -64,13 +64,14 @@ def deltaH( func = input_box( default = sin(x)/x, label = "function", width = 20
     # Find and print average value    
     area = N(integrate(f, x, x_0, x_0 + h))
     average = area / h
-    pretty_print( "F(x_0 + h) - F(x_0) = colored area = " + str(area) + "\nAverage value of f on [x_0, x_0+h] = [F(x_0+h) - F(x_0)] / h  = " + str( average ) + "\nf(x0) = " + str(f(x_0)) + " = " + str(n(f(x_0))) )
+    myExpr = LatexExpr(r"F(x_0 + h) - F(x_0) = \textrm{ colored area } = ") + area + LatexExpr(r"\\ \textrm{Average value of } f \textrm{ on } [x_0, x_0 + h] \, = \, \frac{F(x_0 + h) - F(x_0)}{h} = ") + average + LatexExpr(r"\\ f(x_0) \, = \,") + f(x_0) + " = " + n(f(x_0))
+    pretty_print( myExpr )
     show(p)
 
 </script>
 </div>
 
 <hr>
-Last modified on July 28th, 2017.
+Last modified on August 14th, 2017.
 </body>
 </html>
