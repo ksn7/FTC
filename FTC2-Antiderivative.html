@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>FTC, Part 2 - Function and its Antiderivative</title>
+    <title>FTC, Part 2: Integral = Total Change in Antiderivative</title>
     <script src="https://sagecell.sagemath.org/static/jquery.min.js"></script>
     <script src="https://sagecell.sagemath.org/embedded_sagecell.js"></script>
     <script>
@@ -17,7 +17,7 @@ $(function () {
   </head>
   <body style="width: 1000px;">
 
-  <h1>FTC, Part 2 - Function and its Antiderivative</h1>
+  <h1>FTC, Part 2: Integral = Total Change in Antiderivative</h1>
 
 <p>An Interactive Applet powered by Sage and MathJax.</p>
 <p>(By Kelsey Norman with HTML code from Prof. Gregory V. Bard)</p>
@@ -34,9 +34,9 @@ $(function () {
 </script>
 
 <div class="latex">
-    \textrm{This demo shows how the integral of a function affects the shape of its antiderivative. Here, we show }
+    \textrm{This demo shows how the integral of a function is equal to the total change in that function's antiderivative.} 
     \\
-    \int_a^b f(x) \, dx = F(b) - F(a), \textrm{ where } F \textrm{ is the antiderivative of } f \textrm{ satisfying } F(a) = 0.
+    \textrm{Here, we show } \int_a^b f(x) \, dx = F(b) - F(a), \textrm{ where } F \textrm{ is the antiderivative of } f \textrm{ satisfying } F(a) = 0.
 </div>
 
 <hr>
@@ -45,9 +45,9 @@ $(function () {
 <script type="text/x-sage">
 
 @interact( layout = [ ['func'], ['lower', 'upper'] ])
-def integralTogether(func = input_box( default = sin(x)/x, label = "f(x) = ", width = 20), 
-        lower = slider( 0, 8, 0.1, default = 2, label = "a"),
-        upper = slider( 0, 8, 0.1, default = 6, label = "b") ):
+def integralTogether(func = input_box( default = sin(x)/x, label = "$f(x) = $", width = 20), 
+        lower = slider( map( lambda x:x.n(digits = 2), srange(0, 8, 0.1)), default = 2, label = "$a$" ),
+        upper = slider( map( lambda x:x.n(digits = 2), srange(0, 8, 0.1)), default = 6, label = "$b$" ) ):
    
     # Dodge the deprecation warning?        
     f = func.function(x)
@@ -121,15 +121,21 @@ def integralTogether(func = input_box( default = sin(x)/x, label = "f(x) = ", wi
                 fillcolor = 'red' )
             anti_graph += plot( F, zeroes[j], zeroes[j+1], color = 'red', thickness = 3)
    
+    if F(upper) > F(lower):
+        anti_graph += line( [(lower, F(lower)), (lower, F(upper))], linestyle = '--', color = "green" )
+    else:
+        anti_graph += line( [(lower, F(lower)), (lower, F(upper))], linestyle = '--', color = "red" )
+    anti_graph += line( [(lower, F(upper)), (upper, F(upper))], linestyle = '--', color = "blue" )
+
     # Combing graphs, show, and print area          
     graph = f_graph + anti_graph
     graph.show()
-    pretty_print( "The value of the shaded area is " + str(integral_numerical(f,lower,upper)[0]) )
+    pretty_print( "The total change in the antiderivative is %6.7f." %integral_numerical(f,lower,upper)[0] )
 
 </script>
 </div>
 
 <hr>
-Last modified on July 28th, 2017.
+Last modified on August 17th, 2017.
 </body>
 </html>
