@@ -49,7 +49,7 @@ def deltaH( func = input_box( default = sin(x)/x, label = "$f(x) = $", width = 2
         x_min = input_box( default = 0, label = "$x_{min}$", width = 5),
         x_max = input_box( default = 8, label = "$x_{max}$", width = 5),
         x_0 = input_box( default = 2, label = "$x_0$", width = 5),
-        h = slider( -0.2, 0.2, default = 0.05, step_size = 0.001, label = "$h$") ):
+        h = slider( map( lambda x:x.n(digits = 3), srange(-0.2, 0.2, 0.001)), label = "$h$", default = 0.05) ):
     
     # Set up function and original plot        
     f = func.function(x)          
@@ -64,7 +64,7 @@ def deltaH( func = input_box( default = sin(x)/x, label = "$f(x) = $", width = 2
     # Find and print average value    
     area = N(integrate(f, x, x_0, x_0 + h))
     average = area / h
-    myExpr = LatexExpr(r"F(x_0 + h) - F(x_0) = \textrm{ colored area } = ") + area + LatexExpr(r"\\ \textrm{Average value of } f \textrm{ on } [x_0, x_0 + h] \, = \, \frac{F(x_0 + h) - F(x_0)}{h} = ") + average + LatexExpr(r"\\ f(x_0) \, = \,") + f(x_0) + " = " + n(f(x_0))
+    myExpr = LatexExpr(r"F(x_0 + h) - F(x_0) = \textrm{ colored area } = %6.7f" %area) + LatexExpr(r"\\ \textrm{Average value of } f \textrm{ on } [x_0, x_0 + h] \, = \, \frac{F(x_0 + h) - F(x_0)}{h} = %6.7f" %average) + LatexExpr(r"\\ f(x_0) \, = \,") + f(x_0) + " = %6.7f" %n(f(x_0))
     pretty_print( myExpr )
     show(p)
 
@@ -72,6 +72,6 @@ def deltaH( func = input_box( default = sin(x)/x, label = "$f(x) = $", width = 2
 </div>
 
 <hr>
-Last modified on August 14th, 2017.
+Last modified on August 17th, 2017.
 </body>
 </html>
